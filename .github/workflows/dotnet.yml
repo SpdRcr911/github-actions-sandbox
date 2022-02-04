@@ -1,6 +1,6 @@
 name: .NET
 
-on: [ push ]
+on: [ push, pull_request ]
 jobs:
   build:
 
@@ -19,5 +19,8 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: publish
+    - name: Publish
       run: dotnet publish --no-build
+    - name: Generate Swagger File
+      run: dotnet msbuild -target:GenerateSwaggerFile
+      

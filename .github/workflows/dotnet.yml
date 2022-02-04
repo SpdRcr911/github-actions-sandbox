@@ -30,3 +30,11 @@ jobs:
     #     ls ${{ runner.tool_cache }}
     - name: Generate Swagger File
       run: dotnet msbuild -target:GenerateSwaggerFile ${{ github.workspace }}/project.webapi  --nologo
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+    # Artifact name
+        name: swagger-artifact
+    # A file, directory or wildcard pattern that describes what to upload
+        path: swagger.json
+    # The desired behavior if no files are found using the provided path.

@@ -12,8 +12,9 @@
 
   <Target Name="GenerateSwaggerFile"><!--AfterTargets="Publish"-->
       <Message Text="SwaggerPostBuildTarget"/>
-      <Exec Command="dotnet tool restore" />
-      <Exec Command="dotnet tool run swagger tofile --output swagger.json bin/Debug/net6.0/project.webapi.dll v1" />
+      <Exec Command="dotnet publish --verbosity quiet --nologo --output ../app --configuration Release ." />
+      <Exec Command="dotnet tool restore --verbosity quiet" />
+      <Exec Command="dotnet tool run swagger tofile --output ../swagger.json ../app/project.webapi.dll v1" />
   </Target>
 
 </Project>

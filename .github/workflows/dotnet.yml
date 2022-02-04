@@ -3,7 +3,6 @@ name: .NET
 on: [ push, pull_request ]
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
@@ -13,20 +12,24 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release
     - name: Publish
-      run: dotnet publish --no-build
-    - name: List files in the repository
-      run: ls ${{ github.workspace }}
-    - name: Dotnet Tools
-      run: |
-        echo "Workspace path ${{ github.workspace }}."
-        echo "the preinstalled tools are located here on the runner ${{ runner.tool_cache }}."
-        ls ${{ runner.tool_cache }}
-    - name: Generate Swagger File
-      run: dotnet msbuild -target:GenerateSwaggerFile ${{ github.workspace }}/project.webapi      
+      run: dotnet publish --no-build -c Release -o ${{evn.DOTNET_ROOT}}/app
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: .net-app
+        path: ${{evn.DOTNET_ROOT}}/app
+  generate-swagger:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-app
+      - name: List files in the repository
+        run: ls ${{ github.workspace }}
+    # - name: Generate Swagger File
+    #   run: dotnet msbuild -target:GenerateSwaggerFile ${{ github.workspace }}/project.webapi      

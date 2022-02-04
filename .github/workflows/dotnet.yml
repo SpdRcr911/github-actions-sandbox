@@ -21,3 +21,5 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish
       run: dotnet publish --no-build
+    - name: Generate Swagger File
+      run: dotnet msbuild -target:GenerateSwaggerFile <my project>/project.webapi      

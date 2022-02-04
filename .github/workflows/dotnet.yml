@@ -22,5 +22,4 @@ jobs:
     - name: Publish
       run: dotnet publish --no-build
     - name: Generate Swagger File
-      run: dotnet msbuild -target:GenerateSwaggerFile
-      
+      run: dotnet msbuild -target:GenerateSwaggerFile project.webapi      

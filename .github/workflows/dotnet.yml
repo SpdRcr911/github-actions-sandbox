@@ -10,20 +10,42 @@ on:
         default: '1.0.0'
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
     steps:
-    - uses: actions/checkout@v2
+
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+
     - name: Generate Swagger File
       run: dotnet msbuild -target:GenerateSwaggerFile ${{ github.workspace }}/project.webapi --nologo -p:api_version=${{github.event.inputs.api_version}} -p:api_document_version=v1
+
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.3.1
       with:
         name: swagger-artifact
         path: swagger.json
+    
+    - name: Create Comment
+      uses: actions/github-script@v5
+      id: create-comment
+      with:
+        script: |
+          console.log(context);
+
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: "this is a comment #1",
+            body: "I created this using git-hub actions!"
+          });
+
+          return "some data";
+    - name: Get result
+      run: echo "${{steps.create-comment.outputs.result}}"

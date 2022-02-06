@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Version>1.5.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,9 +13,9 @@
 
   <Target Name="GenerateSwaggerFile"><!--AfterTargets="Publish"-->
       <Message Text="SwaggerPostBuildTarget"/>
-      <Exec Command="dotnet publish --verbosity quiet --nologo --output ../app --configuration Release ." />
+      <Exec Command="dotnet publish --verbosity quiet --nologo --output ../app --configuration Release /p:Version=&quot;$(api_version)&quot; ." />
       <Exec Command="dotnet tool restore --verbosity quiet" />
-      <Exec Command="dotnet tool run swagger tofile --output ../swagger.json ../app/project.webapi.dll v1" />
+      <Exec Command="dotnet tool run swagger tofile --output ../swagger.json ../app/project.webapi.dll $(api_document_version)" />
   </Target>
 
 </Project>

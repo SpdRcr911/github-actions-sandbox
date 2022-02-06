@@ -21,7 +21,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Generate Swagger File
-      run: dotnet msbuild -target:GenerateSwaggerFile ${{ github.workspace }}/project.webapi --nologo -p:api_version=${{github.event.input.api_version}} -p:api_document_version=v1
+      run: dotnet msbuild -target:GenerateSwaggerFile ${{ github.workspace }}/project.webapi --nologo -p:api_version=${{github.event.inputs.api_version}} -p:api_document_version=v1
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.3.1
       with:

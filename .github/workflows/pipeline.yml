@@ -1,0 +1,16 @@
+name: Build and push container image
+on: [push]
+
+jobs:
+  Build:
+    runs-on: ubuntu-lates
+    env:
+      DOTNET_NOLOGO: true
+    steps:
+    - name: Check out code
+      uses: action/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with: 
+        dotnet-version: 6.0.x
+    

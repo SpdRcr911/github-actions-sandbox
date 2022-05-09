@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   Build:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
     steps:

@@ -36,4 +36,4 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: learngithubactions/sandbox:latest
+        tags: learngithubactions.azurecr.io/sandbox:latest

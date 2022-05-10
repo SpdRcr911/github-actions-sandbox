@@ -24,6 +24,10 @@ jobs:
     - 
       name: Build project
       run: dotnet build
+  Docker:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
     - 
       name: Login to ACR
       uses: docker/login-action@v2
